@@ -21,8 +21,6 @@ public abstract class Exame {
     private String caminhoLaudo;
 
 
-
-
     public Exame(String codigo, double valorBase, Date dataSolicitacao, Prioridade prioridade, Paciente paciente, Medico medico) {//, LaudoTemplate laudo) {
         this.codigo = setCodigoUnico();
         this.valorBase = valorBase;
@@ -108,6 +106,20 @@ public abstract class Exame {
     public void cancelarExame() {
         estado.cancelarExame(this);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Exame exame = (Exame) obj;
+        return codigo != null && codigo.equals(exame.codigo);
+    }
+
+    @Override
+    public int hashCode() {
+        return codigo != null ? codigo.hashCode() : 0;
+    }
+
 
     // public LaudoTemplate getLaudo() {
     //     return laudo;

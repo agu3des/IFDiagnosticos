@@ -27,8 +27,6 @@ public abstract class Laudo {
 
     protected String gerarNomeArquivo(Paciente paciente, Exame exame) {
         String nome = paciente.getNome().toLowerCase().replace(" ", "_");
-        String email = paciente.getEmail();
-        String cpf = paciente.getCpf();
         String data = LocalDate.now().toString();
         return "laudo_" + nome + "_" + exame.getCodigo() + "_" + data;
     }

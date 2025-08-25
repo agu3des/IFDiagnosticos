@@ -5,12 +5,17 @@ import reports.decorator.DecoradorCarimbo;
 import reports.template.LaudoFactory;
 import reports.template.LaudoFactoryRegistry;
 import reports.template.LaudoTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import model.exame.Exame;
 import model.laudo.Laudo;
 
 public class LaudoFacade {
 
     private final NotificadorFacade notificadores;
+    private final List<Laudo> laudosGerados = new ArrayList<>();
 
     public LaudoFacade(NotificadorFacade notificadores) {
         this.notificadores = notificadores;
@@ -18,10 +23,7 @@ public class LaudoFacade {
 
     public String gerarLaudo(Exame exame, String formato, boolean printConsole) {
         try {
- 
             LaudoTemplate template = LaudoFactoryRegistry.getTemplate(formato);
-
-
             Laudo laudo = LaudoFactory.criarLaudo(exame, template);
 
             String cabecalho = "Paciente: " + exame.getPaciente().getNome() +
@@ -29,13 +31,16 @@ public class LaudoFacade {
             String corpo = laudo.gerarCorpo(exame); 
             String rodape = "Data: " + exame.getDataSolicitacao();
 
-
             LaudoTemplate laudoDecorado = new DecoradorCarimbo(template);
             GeradorLaudo gerador = new GeradorLaudo(laudoDecorado);
 
             String caminhoLaudo = gerador.gerar(cabecalho, corpo, rodape, exame.getCodigo(), printConsole);
             exame.setCaminhoLaudo(caminhoLaudo); 
 
+            // guarda o laudo gerado
+            laudosGerados.add(laudo);
+
+            // dispara notificadores
             if (notificadores != null) {
                 notificadores.notificarPaciente(exame, caminhoLaudo);
             }
@@ -46,5 +51,9 @@ public class LaudoFacade {
             System.err.println("Erro ao gerar laudo: " + e.getMessage());
             return "erro_ao_gerar_laudo";
         }
+    }
+
+    public List<Laudo> getLaudosGerados() {
+        return new ArrayList<>(laudosGerados);
     }
 }

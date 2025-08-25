@@ -21,7 +21,7 @@ public class NotificadorEmail implements NotificadorObserver {
 
     private void enviarEmail(String destinatario, String assunto, String corpo, String caminhoAnexo) {
         final String remetente = "anandaguedesdoo@gmail.com";
-        final String senha = "kthdipwxqmubotkv"; 
+        final String senha = "----"; 
 
         System.out.println("📤 Preparando email...");
         System.out.println("Remetente: " + remetente);

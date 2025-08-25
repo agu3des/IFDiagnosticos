@@ -80,14 +80,9 @@ public class Paciente {
     }
 
     public int getIdade() {
-
-        LocalDate nascimento = dataNascimento.toInstant()
-                                             .atZone(ZoneId.systemDefault())
-                                             .toLocalDate();
-
+        LocalDate nascimento = dataNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate hoje = LocalDate.now();
         int idade = Period.between(nascimento, hoje).getYears();
-
         return idade;
 
     }

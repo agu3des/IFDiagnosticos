@@ -156,6 +156,9 @@ flowchart TD
   * **MÉDIA** → intermediária
   * **BAIXA** → menor prioridade
 
+**9. Validators (`ValidadorExame`)**
+* Validar exames e criar validadores.
+
 ## Estrutura do Projeto
 
 ```plaintext
